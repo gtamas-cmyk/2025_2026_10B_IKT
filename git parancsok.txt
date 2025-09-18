@@ -1,0 +1,27 @@
+git init
+-helyi repostorí(egyszer)
+
+Git add
+-a projektben lévő összes változást tegye a "színpadra"
+
+git status
+-A módositások aktuális állapotát jelzi, mi modusolt és hogy a szinpadon van-e
+
+git comit -m "message"
+-az állapot végleges lezárása
+
+Ha ki szeretnénk lépni a szerkesztésből 
+CTR+C
+
+git add<fájlnév, kiterjesztés>
+-Fálj név megadűsűval egy fájlt módosítást is menthetünk
+
+git log
+-megmutatja, hogy milyen változások történtek a projektben, mikor, és ki által.
+
+git branch
+- Az ágak listája. *az aktuális át ellenőrzése*
+
+git branch<uj agazatok hasznalata>
+
+git checkout <branch ujag kivalasztasa>

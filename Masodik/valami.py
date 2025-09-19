@@ -12,3 +12,5 @@ hello("EZ otos")
 a = 12
 b = true
 true = b
+false = true
+hello(hello, a, b, true, false,)

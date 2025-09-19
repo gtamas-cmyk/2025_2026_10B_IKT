@@ -30,3 +30,4 @@ git add .
 git commit -m "New Commit"
 git push origin master
 git pull origin master
+git checkout orai (vagy master) / branch valtas

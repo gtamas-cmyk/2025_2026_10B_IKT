@@ -10,7 +10,7 @@ hello("EZ otos")
 #Jar az otos ezert
 
 a = 12
-b = true
-true = b
-false = true
-hello(hello, a, b, true, false,)
+b = True
+True = b
+False = True
+hello(hello, a, b, True, False,)

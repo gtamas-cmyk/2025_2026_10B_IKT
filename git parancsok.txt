@@ -25,3 +25,8 @@ git branch
 git branch<uj agazatok hasznalata>
 
 git checkout <branch ujag kivalasztasa>
+
+git add .
+git commit -m "New Commit"
+git push origin master
+git pull origin master

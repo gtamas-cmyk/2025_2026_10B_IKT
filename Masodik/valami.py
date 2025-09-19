@@ -11,4 +11,4 @@ hello("EZ otos")
 
 a = 12
 b = True
-hello(hello, a, b)
+hello("hello", a, b)

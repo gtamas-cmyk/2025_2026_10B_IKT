@@ -1,8 +1,8 @@
 import math 
 
 # 1. feladat, megadjuk az oldalakat
-a = 5
-b = 6
+a = 3
+b = 4
 c = 7
 
 # kerület 

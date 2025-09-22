@@ -51,3 +51,5 @@ a letrehozott kapcsolat alapjan feltolti a githubra a valtoztatasokat, ez csak a
 
 git pull -g origin <branch nev>
 egyszer kell csak beirni es kivalasztani azt h pl git pull -g origin master es utana lehet a rovititettet hasznalni ami git pull
+
+git pull origin master --allow-unrelated-histories

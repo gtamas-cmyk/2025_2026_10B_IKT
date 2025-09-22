@@ -32,8 +32,22 @@ git push origin master
 git pull origin master
 git checkout orai (vagy master) / branch valtas
 
+git checkout -b <branchnev>
 git branch <nev>
 branch valtoztatas
 
 git remote add origin <branch nev> https://github.com/
 
+git remote show
+megmutatja milyen neven vannak kapcsolatok
+git remote show origin
+megmutatja melyik githubos repoval van kapcsolatban
+
+git pull orogin <branchnev>
+a letrehozott origin kapcsolat alapjan leszedi a githubrol a valtoztatasokat
+
+git push origin <branch nev>
+a letrehozott kapcsolat alapjan feltolti a githubra a valtoztatasokat, ez csak akkor mukodik ha le van pullolva v ha nincs valtoztatas
+
+git pull -g origin <branch nev>
+egyszer kell csak beirni es kivalasztani azt h pl git pull -g origin master es utana lehet a rovititettet hasznalni ami git pull

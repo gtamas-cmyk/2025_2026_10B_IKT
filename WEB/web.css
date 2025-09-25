@@ -4,3 +4,14 @@ img {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+kepnev1 {
+    border: 2px;
+    width: 10px;
+    border-color: red;
+}
+
+h1{
+    font-weight: bold;
+
+}

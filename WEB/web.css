@@ -14,3 +14,7 @@ h1{
     font-weight: bold;
     font-size: large;
 }
+
+*{
+  background-color: #2e2e2e;
+}

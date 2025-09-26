@@ -1,4 +1,4 @@
-img {
+.hehe {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -13,4 +13,11 @@ img {
 h1{
     font-weight: bold;
     font-size: large;
+}
+.lorem {
+  background-color: chocolate;
+}
+
+.dolor {
+  background-color: blueviolet;
 }

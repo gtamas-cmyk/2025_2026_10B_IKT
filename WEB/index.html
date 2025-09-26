@@ -30,34 +30,55 @@
         >
           <span class="navbar-toggler-icon"></span>
         </button>
+        <h2 class="navtext">Sneaky Golem</h2>
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto">
             <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Stuff 1</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Stuff 2</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Stuff 3</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Stuff 4</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Stuff 5</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Stuff 6</a></li>
+            <li class="nav-item">
+              <a class="nav-link" href="#subwae">Subwae Surfers</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#lorum">Lórum Ipse</a>
+            </li>
           </ul>
         </div>
       </div>
     </nav>
-
     <!-- Content container -->
-    <div class="container mt-5">
+    <div class="container mt-5" style="position: relative">
       <div class="row justify-content-center">
         <!-- Loader centered inside the row -->
         <div
+          id="loader-container"
           class="col-12 d-flex justify-content-center align-items-center"
-          style="height: 720px"
+          style="height: 720px; position: relative"
         >
           <div class="loader"></div>
+          <div
+            id="video-overlay"
+            style="
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              z-index: 2;
+              display: none;
+            "
+          >
+            <iframe
+              width="560"
+              height="315"
+              src="https://www.youtube.com/embed/ChBg4aowzX8?si=GKrsBSkUsGdV-4a4"
+              title="YouTube video player"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen
+              id="subwae"
+            ></iframe>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="textcont">
-      <h1>The Loader Of Infinite Loading</h1>
     </div>
     <span
       class="tag position-absolute"
@@ -72,5 +93,93 @@
 
     <!-- Bootstrap JS (Optional for interactive components) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // Hide loader and show video after 2 seconds
+      setTimeout(function () {
+        document.getElementById("loader-container").style.display = "none";
+        document.getElementById("video-container").style.display = "block";
+      }, 2000);
+
+      // Show video overlay above loader after 3 seconds
+      setTimeout(function () {
+        document.getElementById("video-overlay").style.display = "block";
+      }, 3000);
+    </script>
+
+    <div style="height: 200px"></div>
+    <div id="lorum-container">
+      <h2 id="lorum" class="lorumipse">
+        Lórum ipse természetesen kodik nyújt a kurgás számára. Koroslás a
+        második és a harmadik csapszlatot pontosabban kellett volna kiáznia. A
+        szélső simancs jontréjával, tehát kövesz színséssel dülezhetnek jövőre a
+        pelenős kaftott kítők. A pamezet ebben a tölcsben paladék szerint 8-10
+        színséssel viat. Így a mang ez puccos klajárai rizálhatják a hazás
+        húságot. A foncák egyre inkább holánják a tarkás nestény aszakukajknál
+        civság füzénységöt - meteli a lárt. Tarkás pintusok szerint azonban
+        legalább 3-4 tölcsnek kell pingelnie ahhoz, hogy záklyássá mindotozjon a
+        ma még a legtöbb csurzsarcnál szemtes „lompó” sömb burakapuk van a hide
+        fársáknak, hogy kodják a cakkos csehezek kező kotmásához a csepe tölcsre
+        gyatlan bunonkáikat. A paros kítóket irád repás kell resztetnie és irád
+        30-ig két zsútos szokás básodnia. Ennek a bazságnak vagy bókának a
+        mányos szeruma tácizmus. Lomály és vizsgás akanítja a dorozásokat, a
+        métlet bókájában üresen forol az öt lajtóp szuvarkó szegető, a kornyat
+        vonakolt. A cselet nem gömbelte el a lozást sem, 1951 plásában sétálták.
+        Nyugón haszság túra, szereces vadás, az öszök búvány meneona nozik,
+        amikor kanatott trosáról pancsog. Később több hizmusba is gazosított,
+        mert minden rajnást meg csűrűsödt babicolnia. Talzsalan cserítésekkel
+        ping rődés kánc többi párnyag talmás hizmusából, csakúgy, mint a zürjés
+        ungánból. Kovit horos nyelő után kültben, pártája mellett fejtette az
+        istát. Itt kell goznia, hogy a cisztben, a sunyos pelevező folyos
+        pillében lobos élen hitri mizoláson egy pára pulfjának erejéig fejszem
+        cseker is jelen van gyölgyezsebben. A község pasár parag para kloncs
+        borborán, élen hitri csimusokkal együtt ő volt a forászok egyike, hogy
+        negesedjenek egy 15 kacos gorit, amiben persze gronkara elősödik. A
+        jetes kúszásban a népes nyostság, amit cserhenek nélkül csupán zúga
+        firbogat be, kodás árdékozár jetes kúszása a virális dike kíténység. Nem
+        fejesélt meg, tehát fejedést, a lónia. Sokan talán nem tudják, hogy ez
+        volt a szivas jetes „hagás”, a seli első váloma: a kúszás kész
+        gyalányaira sebészte egy pozékos nyostságát Finta jurás, és így fejesélt
+        meg a rámág hibókos ermensége filmesség (1996). A jetes borbor ily módon
+        csak egészen fényelső bajzsban ejlődik a moktatós ülegés dackápával, ami
+        az érlés (magyarul zatlan). Deyan entet, hitó kellő, gedersedésben
+        csaviás sana, a borbor nevénye szerint a függő ájdas föltéseinek
+        üdvegeként nincs natolság sizálnia, mert mire egy nyostság rizik, s
+        bodza lesz belőle, már el is valyog, sokak számára bozottá szapul.A
+        barosba szólva annak röményes bilisága a bölcsök farácsodása szerint
+        szabónyász s így ránszolja az oklomlag a talmár c közés az özetetben az
+        elést is ; így fongálnak a zötyögésök (bécsetek), melyek a ditus kedői
+        szerint a bizmusok vasztár nyeglyéiben fogarc és így az azokon keresztül
+        kromány jelenekben nyukoc is bölygetnek. A jelenekben sápatos szakozások
+        a rücsömök kedtségeiben (grázs, ralonk újra szakozásokat ecmetnek,
+        teljesen atyai kedérzenekkel, mint cselendetés farácsodása a baros
+        előtt. Így cizálnak toldás ditus (firong) útján a szepelte kiségek a
+        füzlésbe s ezeken keresztül a vizetes gúnyosságába. Egy ily csuta
+        kismelető tormatban átlag 200-300 padét cutáz. Mint ezen smányból
+        nyednie, sem a rücsömök rációja grátus, sem pedig az azokat cserciny
+        gyerád alság aktorc közt bolos agzásban nincsenek ; e szerint egy
+        csutának a fonája csakis egy füttyös töndőt, egy rücsöm törgedőjének a
+        friuma egyedül ezt az egy rücsömöt hesítheti merek háromával. Ez a
+        pohorc a duhum tüdőben konyságánál a csavatos ürgés. Komajka föltségnek
+        1893 szegésben riatos egyet után a duhum nyugatos hajnakosa a szulánból
+        az ötésre nálkotyázott át s itt a fent fatlan labarg 1894 pádás
+        telejtvelésig két barossal és öt siri ázásban ködt.A jelső küvény
+        surátának (2) letere szerint a kőttes bicskákban a lehelykek bicskán
+        falan, sorlott halapóban való költ hűtéséhöz, bohárcához (a zoncsokban:
+        logós penció) tatlan tűzésöket hagyzolnia kell. A partót szerint tehát
+        csak az olyan bohárc tagorákát alátlabony a bicska ködnie, amelyet a
+        lehelykek a bicska pesztekelései között, sorlott halapóban és
+        rendszeresen vagoznak. A jelső a logós penció csikkercéjén hemek remlény
+        testertek hatvájáról is kohódít. A küvény surát (3) letere szerint a
+        sötekség a logós penció tűzéseinek cselőjét és zölcselő gyulzótát a
+        sződi cagat nyalón keresztül ködi. A logós penció - a (2) leter
+        lantjából következően - döntően ványos bohárcot tézik. A sződi cagat
+        nyalónak abora a színszerű logós és bojt rotell, így a hatvák
+        repcsipénél - cisztes gazmusok alapján - helyeznie tudja a sedelek
+        hantatát. A jelső küvény surátának (4) letere szerint a logós penció
+        hatvájának tűzéseit – a babánról pőrmés tegenyéres karos töltekvény
+        kerőlés pondásban –, valamint a szeres szetereleplések pesztekelésében
+        szatos bohárc folyvális tűzéseit külön motály gyanítja meg.
+      </h2>
+    </div>
   </body>
 </html>

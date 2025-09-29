@@ -121,6 +121,17 @@
     <script>
       // "Pim Pami Pong" hanghatás
       const pimPamiPongSound = new Audio('https://cdn.pixabay.com/audio/2022/03/15/audio_115b6c2b7b.mp3'); // Vicces pong hang
+      let pongSoundEnabled = false;
+      function enablePongSound() {
+        if (!pongSoundEnabled) {
+          pimPamiPongSound.play().catch(()=>{}); // próbáljuk lejátszani, hogy engedélyezze a böngésző
+          pimPamiPongSound.pause();
+          pimPamiPongSound.currentTime = 0;
+          pongSoundEnabled = true;
+        }
+      }
+      document.addEventListener('keydown', enablePongSound, { once: true });
+      document.addEventListener('mousedown', enablePongSound, { once: true });
       // Pong Game Implementation
       const canvas = document.getElementById("pongCanvas");
       const ctx = canvas.getContext("2d");
@@ -156,8 +167,10 @@
         ctx.fillText(rightScore, (3 * canvas.width) / 4, 40);
       }
       function playPimPamiPong() {
-        pimPamiPongSound.currentTime = 0;
-        pimPamiPongSound.play();
+        if (pongSoundEnabled) {
+          pimPamiPongSound.currentTime = 0;
+          pimPamiPongSound.play();
+        }
       }
       function update() {
         if (gameOver) return;

@@ -149,8 +149,8 @@
         rightY = (canvas.height / 2) - (paddleHeight / 2);
         ballX = canvas.width / 2;
         ballY = canvas.height / 2;
-        ballDX = 4;
-        ballDY = 2;
+        ballDX = 2; // Lassabb labda
+        ballDY = 1; // Lassabb labda
         leftScore = 0;
         rightScore = 0;
         gameOver = false;
@@ -237,23 +237,30 @@
         rightY = Math.max(0, Math.min(canvas.height - paddleHeight, rightY));
         leftY = Math.max(0, Math.min(canvas.height - paddleHeight, leftY));
       }
+      function playPimPamiPong() {
+        if (pongSoundEnabled) {
+          pimPamiPongSound.currentTime = 0;
+          pimPamiPongSound.play();
+        }
+      }
       function resetBall() {
         ballX = canvas.width / 2;
         ballY = canvas.height / 2;
-        ballDX = -ballDX;
-        ballDY = 2 * (Math.random() > 0.5 ? 1 : -1);
+        ballDX = -ballDX > 0 ? 2 : -2; // Lassabb labda
+        ballDY = (Math.random() > 0.5 ? 1 : -1); // Lassabb labda
       }
       // Player controls (W/S bal ütő, fel/le nyilak jobb ütő)
       document.addEventListener("keydown", function (e) {
         if (gameOver) return;
-        if (e.key === "w") leftY -= 20;
-        if (e.key === "s") leftY += 20;
+        const paddleStep = 5; // Simább mozgás
+        if (e.key === "w") leftY -= paddleStep;
+        if (e.key === "s") leftY += paddleStep;
         if (e.key === "ArrowUp") {
-          rightY -= 20;
+          rightY -= paddleStep;
           e.preventDefault();
         }
         if (e.key === "ArrowDown") {
-          rightY += 20;
+          rightY += paddleStep;
           e.preventDefault();
         }
       });

@@ -137,7 +137,13 @@
       const ctx = canvas.getContext("2d");
       const paddleHeight = 80, paddleWidth = 10;
       let leftY, rightY, ballX, ballY, ballDX, ballDY, leftScore, rightScore, gameOver;
+      let ballColor = getRandomColor();
       const WIN_SCORE = 5;
+      function getRandomColor() {
+        // Animált, élénk szín generálása
+        const colors = ["#ff3b3b", "#3bff3b", "#3b3bff", "#fff83b", "#ff3bff", "#3bfff8", "#ff8c3b"];
+        return colors[Math.floor(Math.random() * colors.length)];
+      }
       function initGame() {
         leftY = (canvas.height / 2) - (paddleHeight / 2);
         rightY = (canvas.height / 2) - (paddleHeight / 2);
@@ -148,6 +154,7 @@
         leftScore = 0;
         rightScore = 0;
         gameOver = false;
+        ballColor = getRandomColor();
         document.getElementById('pongWinMsg').style.display = 'none';
         document.getElementById('pongRestartBtn').style.display = 'none';
       }
@@ -160,9 +167,11 @@
         // Draw ball
         ctx.beginPath();
         ctx.arc(ballX, ballY, 10, 0, Math.PI * 2);
+        ctx.fillStyle = ballColor;
         ctx.fill();
         // Draw scores
         ctx.font = "32px Arial";
+        ctx.fillStyle = "#fff";
         ctx.fillText(leftScore, canvas.width / 4, 40);
         ctx.fillText(rightScore, (3 * canvas.width) / 4, 40);
       }
@@ -179,6 +188,7 @@
         // Ball collision with top/bottom
         if (ballY < 10 || ballY > canvas.height - 10) {
           ballDY = -ballDY;
+          ballColor = getRandomColor();
           playPimPamiPong();
         }
         // Ball collision with paddles
@@ -188,6 +198,7 @@
           ballY < leftY + paddleHeight
         ) {
           ballDX = -ballDX;
+          ballColor = getRandomColor();
           playPimPamiPong();
         }
         if (
@@ -196,30 +207,32 @@
           ballY < rightY + paddleHeight
         ) {
           ballDX = -ballDX;
+          ballColor = getRandomColor();
           playPimPamiPong();
         }
         // Score
         if (ballX < 0) {
           rightScore++;
+          ballColor = getRandomColor();
           playPimPamiPong();
           resetBall();
         }
         if (ballX > canvas.width) {
           leftScore++;
+          ballColor = getRandomColor();
           playPimPamiPong();
           resetBall();
         }
         // Win check
         if (leftScore >= WIN_SCORE || rightScore >= WIN_SCORE) {
           gameOver = true;
-          let msg = leftScore >= WIN_SCORE ? 'Bal játékos nyert!' : 'Gép nyert!';
+          let msg = leftScore >= WIN_SCORE ? 'Bal játékos nyert!' : 'Jobb játékos nyert!';
           document.getElementById('pongWinMsg').textContent = msg;
           document.getElementById('pongWinMsg').style.display = 'block';
           document.getElementById('pongRestartBtn').style.display = 'block';
         }
-        // Simple AI for right paddle
-        if (rightY + paddleHeight / 2 < ballY) rightY += 4;
-        else if (rightY + paddleHeight / 2 > ballY) rightY -= 4;
+        // Kétjátékos mód: jobb ütő fel/le nyilak
+        // AI kikapcsolva, csak játékos irányítja
         // Clamp paddles
         rightY = Math.max(0, Math.min(canvas.height - paddleHeight, rightY));
         leftY = Math.max(0, Math.min(canvas.height - paddleHeight, leftY));
@@ -230,11 +243,13 @@
         ballDX = -ballDX;
         ballDY = 2 * (Math.random() > 0.5 ? 1 : -1);
       }
-      // Player controls (W/S)
+      // Player controls (W/S bal ütő, fel/le nyilak jobb ütő)
       document.addEventListener("keydown", function (e) {
         if (gameOver) return;
         if (e.key === "w") leftY -= 20;
         if (e.key === "s") leftY += 20;
+        if (e.key === "ArrowUp") rightY -= 20;
+        if (e.key === "ArrowDown") rightY += 20;
       });
       document.getElementById('pongRestartBtn').onclick = function() {
         initGame();

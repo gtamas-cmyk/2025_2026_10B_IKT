@@ -110,51 +110,21 @@
     <!-- Pong Game Section -->
     <div class="container mt-5">
       <h2 class="text-light">Pong Játék</h2>
-      <div
-        class="text-light mb-2"
-        style="text-align: center; font-size: 1.1em"
-      >
-        Irányítás: <b>W</b> - fel, <b>S</b> - le &nbsp;|&nbsp; Elsőként 5 pontot
-        elérő nyer!<br />
-        Hangok: pont, ütközés
+      <div class="text-light mb-2" style="text-align:center;font-size:1.1em;">
+        Irányítás: <b>W</b> - fel, <b>S</b> - le &nbsp;|&nbsp; Elsőként 5 pontot elérő nyer!<br>
+        Hang: <b>Pim Pami Pong</b> (ütközés, pont)
       </div>
-      <div
-        id="pongWinMsg"
-        class="alert alert-success text-center"
-        style="display: none"
-      ></div>
-      <button
-        id="pongRestartBtn"
-        class="btn btn-primary mb-2"
-        style="display: none; margin: auto"
-      >
-        Újraindítás
-      </button>
-      <canvas
-        id="pongCanvas"
-        width="600"
-        height="400"
-        style="
-          background: #222;
-          display: block;
-          margin: auto;
-          border-radius: 10px;
-        "
-      ></canvas>
+      <div id="pongWinMsg" class="alert alert-success text-center" style="display:none;"></div>
+      <button id="pongRestartBtn" class="btn btn-primary mb-2" style="display:none;margin:auto;">Újraindítás</button>
+      <canvas id="pongCanvas" width="600" height="400" style="background: #222; display: block; margin: auto; border-radius: 10px;"></canvas>
     </div>
     <script>
-      // Hanghatások
-      const pongHitSound = new Audio(
-        "https://cdn.jsdelivr.net/gh/rogeriopvl/notify.js/sounds/notify.wav"
-      );
-      const pongScoreSound = new Audio(
-        "https://cdn.jsdelivr.net/gh/rogeriopvl/notify.js/sounds/notify.mp3"
-      );
+      // "Pim Pami Pong" hanghatás
+      const pimPamiPongSound = new Audio('https://cdn.pixabay.com/audio/2022/03/15/audio_115b6c2b7b.mp3'); // Vicces pong hang
       // Pong Game Implementation
       const canvas = document.getElementById("pongCanvas");
       const ctx = canvas.getContext("2d");
-      const paddleHeight = 80,
-        paddleWidth = 10;
+      const paddleHeight = 80, paddleWidth = 10;
       let leftY, rightY, ballX, ballY, ballDX, ballDY, leftScore, rightScore, gameOver;
       const WIN_SCORE = 5;
       function initGame() {
@@ -185,6 +155,10 @@
         ctx.fillText(leftScore, canvas.width / 4, 40);
         ctx.fillText(rightScore, (3 * canvas.width) / 4, 40);
       }
+      function playPimPamiPong() {
+        pimPamiPongSound.currentTime = 0;
+        pimPamiPongSound.play();
+      }
       function update() {
         if (gameOver) return;
         ballX += ballDX;
@@ -192,8 +166,7 @@
         // Ball collision with top/bottom
         if (ballY < 10 || ballY > canvas.height - 10) {
           ballDY = -ballDY;
-          pongHitSound.currentTime = 0;
-          pongHitSound.play();
+          playPimPamiPong();
         }
         // Ball collision with paddles
         if (
@@ -202,8 +175,7 @@
           ballY < leftY + paddleHeight
         ) {
           ballDX = -ballDX;
-          pongHitSound.currentTime = 0;
-          pongHitSound.play();
+          playPimPamiPong();
         }
         if (
           ballX > canvas.width - 20 &&
@@ -211,30 +183,26 @@
           ballY < rightY + paddleHeight
         ) {
           ballDX = -ballDX;
-          pongHitSound.currentTime = 0;
-          pongHitSound.play();
+          playPimPamiPong();
         }
         // Score
         if (ballX < 0) {
           rightScore++;
-          pongScoreSound.currentTime = 0;
-          pongScoreSound.play();
+          playPimPamiPong();
           resetBall();
         }
         if (ballX > canvas.width) {
           leftScore++;
-          pongScoreSound.currentTime = 0;
-          pongScoreSound.play();
+          playPimPamiPong();
           resetBall();
         }
         // Win check
         if (leftScore >= WIN_SCORE || rightScore >= WIN_SCORE) {
           gameOver = true;
-          let msg =
-            leftScore >= WIN_SCORE ? "Bal játékos nyert!" : "Gép nyert!";
-          document.getElementById("pongWinMsg").textContent = msg;
-          document.getElementById("pongWinMsg").style.display = "block";
-          document.getElementById("pongRestartBtn").style.display = "block";
+          let msg = leftScore >= WIN_SCORE ? 'Bal játékos nyert!' : 'Gép nyert!';
+          document.getElementById('pongWinMsg').textContent = msg;
+          document.getElementById('pongWinMsg').style.display = 'block';
+          document.getElementById('pongRestartBtn').style.display = 'block';
         }
         // Simple AI for right paddle
         if (rightY + paddleHeight / 2 < ballY) rightY += 4;
@@ -255,7 +223,7 @@
         if (e.key === "w") leftY -= 20;
         if (e.key === "s") leftY += 20;
       });
-      document.getElementById("pongRestartBtn").onclick = function () {
+      document.getElementById('pongRestartBtn').onclick = function() {
         initGame();
       };
       function gameLoop() {

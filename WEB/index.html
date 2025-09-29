@@ -40,6 +40,9 @@
             <li class="nav-item">
               <a class="nav-link" href="#lorum">Lórum Ipse</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#joke">Joke Generator</a>
+            </li>
           </ul>
         </div>
       </div>
@@ -181,5 +184,23 @@
         szatos bohárc folyvális tűzéseit külön motály gyanítja meg.
       </h2>
     </div>
+    <div class="container mt-5 text-center">
+      <h3 class="text-light">Random Joke Generator</h3>
+      <button id="jokeBtn" class="btn btn-primary mb-3">
+        Get a Random Joke
+      </button>
+      <div id="jokeDisplay" class="text-light" style="min-height: 40px"></div>
+    </div>
+    <script>
+      document.getElementById("jokeBtn").onclick = async function () {
+        const res = await fetch(
+          "https://official-joke-api.appspot.com/random_joke"
+        );
+        const joke = await res.json();
+        document.getElementById(
+          "jokeDisplay"
+        ).innerHTML = `<b>${joke.setup}</b><br>${joke.punchline}`;
+      };
+    </script>
   </body>
 </html>

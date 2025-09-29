@@ -107,6 +107,103 @@
     </script>
 
     <div style="height: 200px"></div>
+    <!-- Pong Game Section -->
+    <div class="container mt-5">
+      <h2 class="text-light">Pong Játék</h2>
+      <canvas
+        id="pongCanvas"
+        width="600"
+        height="400"
+        style="
+          background: #222;
+          display: block;
+          margin: auto;
+          border-radius: 10px;
+        "
+      ></canvas>
+    </div>
+    <script>
+      // Pong Game Implementation
+      const canvas = document.getElementById("pongCanvas");
+      const ctx = canvas.getContext("2d");
+      const paddleHeight = 80,
+        paddleWidth = 10;
+      let leftY = (canvas.height / 2) - (paddleHeight / 2);
+      let rightY = (canvas.height / 2) - (paddleHeight / 2);
+      let ballX = canvas.width / 2,
+        ballY = canvas.height / 2;
+      let ballDX = 4,
+        ballDY = 2;
+      let leftScore = 0,
+        rightScore = 0;
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        // Draw paddles
+        ctx.fillStyle = "#fff";
+        ctx.fillRect(10, leftY, paddleWidth, paddleHeight);
+        ctx.fillRect(canvas.width - 20, rightY, paddleWidth, paddleHeight);
+        // Draw ball
+        ctx.beginPath();
+        ctx.arc(ballX, ballY, 10, 0, Math.PI * 2);
+        ctx.fill();
+        // Draw scores
+        ctx.font = "32px Arial";
+        ctx.fillText(leftScore, canvas.width / 4, 40);
+        ctx.fillText(rightScore, (3 * canvas.width) / 4, 40);
+      }
+      function update() {
+        ballX += ballDX;
+        ballY += ballDY;
+        // Ball collision with top/bottom
+        if (ballY < 10 || ballY > canvas.height - 10) ballDY = -ballDY;
+        // Ball collision with paddles
+        if (
+          ballX < 20 &&
+          ballY > leftY &&
+          ballY < leftY + paddleHeight
+        )
+          ballDX = -ballDX;
+        if (
+          ballX > canvas.width - 20 &&
+          ballY > rightY &&
+          ballY < rightY + paddleHeight
+        )
+          ballDX = -ballDX;
+        // Score
+        if (ballX < 0) {
+          rightScore++;
+          resetBall();
+        }
+        if (ballX > canvas.width) {
+          leftScore++;
+          resetBall();
+        }
+        // Simple AI for right paddle
+        if (rightY + paddleHeight / 2 < ballY) rightY += 4;
+        else if (rightY + paddleHeight / 2 > ballY) rightY -= 4;
+        // Clamp paddles
+        rightY = Math.max(0, Math.min(canvas.height - paddleHeight, rightY));
+        leftY = Math.max(0, Math.min(canvas.height - paddleHeight, leftY));
+      }
+      function resetBall() {
+        ballX = canvas.width / 2;
+        ballY = canvas.height / 2;
+        ballDX = -ballDX;
+        ballDY = 2 * (Math.random() > 0.5 ? 1 : -1);
+      }
+      // Player controls (W/S)
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "w") leftY -= 20;
+        if (e.key === "s") leftY += 20;
+      });
+      function gameLoop() {
+        update();
+        draw();
+        requestAnimationFrame(gameLoop);
+      }
+      gameLoop();
+    </script>
+
     <div id="lorum-container">
       <h2 id="lorum" class="lorumipse">
         Lórum ipse természetesen kodik nyújt a kurgás számára. Koroslás a

@@ -116,7 +116,7 @@
       </div>
       <div id="pongWinMsg" class="alert alert-success text-center" style="display:none;"></div>
       <button id="pongRestartBtn" class="btn btn-primary mb-2" style="display:none;margin:auto;">Újraindítás</button>
-      <canvas id="pongCanvas" width="600" height="400" style="background: #222; display: block; margin: auto; border-radius: 10px;"></canvas>
+      <canvas id="pongCanvas" width="600" height="400" style="background: #222; display: block; margin: auto; border-radius: 10px; box-shadow: 0 0 40px #00f8ff, 0 0 0 10px #222; background-image: url('https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=600&q=80'); background-size: cover; background-position: center;"></canvas>
     </div>
     <script>
       // "Pim Pami Pong" hanghatás
@@ -170,12 +170,18 @@
         ctx.fillStyle = ballColor;
         ctx.fill();
         // Draw scores
-        ctx.font = "32px Arial";
-        ctx.fillStyle = "#fff";
-        ctx.fillText("Sparky: " + leftScore, 20, 30); // Bal felső sarok
-        ctx.font = "18px Arial";
-        ctx.fillStyle = "#ccc";
-        ctx.fillText("Sneaky Golem: " + rightScore, canvas.width - 180, canvas.height - 20); // Jobb alsó sarok, kisebb betűvel
+        ctx.font = "bold 32px Arial";
+ctx.fillStyle = "#ffea00";
+ctx.strokeStyle = "#222";
+ctx.lineWidth = 3;
+ctx.strokeText("Sparky: " + leftScore, 20, 30); // Kontúr
+ctx.fillText("Sparky: " + leftScore, 20, 30); // Bal felső sarok
+ctx.font = "bold 22px Arial";
+ctx.fillStyle = "#00fff7";
+ctx.strokeStyle = "#222";
+ctx.lineWidth = 2;
+ctx.strokeText("Sneaky Golem: " + rightScore, canvas.width - 180, canvas.height - 20); // Kontúr
+ctx.fillText("Sneaky Golem: " + rightScore, canvas.width - 180, canvas.height - 20); // Jobb alsó sarok
       }
       function playPimPamiPong() {
         if (pongSoundEnabled) {

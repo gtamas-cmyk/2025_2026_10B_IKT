@@ -172,8 +172,10 @@
         // Draw scores
         ctx.font = "32px Arial";
         ctx.fillStyle = "#fff";
-        ctx.fillText(leftScore, canvas.width / 4, 40);
-        ctx.fillText(rightScore, (3 * canvas.width) / 4, 40);
+        ctx.fillText("Sparky: " + leftScore, 20, 30); // Bal felső sarok
+        ctx.font = "18px Arial";
+        ctx.fillStyle = "#ccc";
+        ctx.fillText("Sneaky Golem: " + rightScore, canvas.width - 180, canvas.height - 20); // Jobb alsó sarok, kisebb betűvel
       }
       function playPimPamiPong() {
         if (pongSoundEnabled) {
@@ -235,7 +237,7 @@
         // Win check
         if (leftScore >= WIN_SCORE || rightScore >= WIN_SCORE) {
           gameOver = true;
-          let msg = leftScore >= WIN_SCORE ? 'Bal játékos nyert!' : 'Jobb játékos nyert!';
+          let msg = leftScore >= WIN_SCORE ? 'Sparky nyert!' : 'Sneaky Golem nyert!';
           document.getElementById('pongWinMsg').textContent = msg;
           document.getElementById('pongWinMsg').style.display = 'block';
           document.getElementById('pongRestartBtn').style.display = 'block';

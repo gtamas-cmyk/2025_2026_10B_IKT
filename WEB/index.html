@@ -110,6 +110,209 @@
     </script>
 
     <div style="height: 200px"></div>
+    <!-- Pong Game Section -->
+    <div class="container mt-5">
+      <h2 class="text-light">Pong Játék</h2>
+      <div class="text-light mb-2" style="text-align:center;font-size:1.1em;">
+        Irányítás: <b>W</b> - fel, <b>S</b> - le &nbsp;|&nbsp; Elsőként 5 pontot elérő nyer!<br>
+        Hang: <b>Pim Pami Pong</b> (ütközés, pont)
+      </div>
+      <div id="pongWinMsg" class="alert alert-success text-center" style="display:none;"></div>
+      <button id="pongRestartBtn" class="btn btn-primary mb-2" style="display:none;margin:auto;">Újraindítás</button>
+      <canvas id="pongCanvas" width="600" height="400" style="background: #222; display: block; margin: auto; border-radius: 10px; box-shadow: 0 0 40px #00f8ff, 0 0 0 10px #222; background-image: url('https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=600&q=80'); background-size: cover; background-position: center;"></canvas>
+    </div>
+    <script>
+      // "Pim Pami Pong" hanghatás
+      const pimPamiPongSound = new Audio('https://cdn.pixabay.com/audio/2022/03/15/audio_115b6c2b7b.mp3'); // Vicces pong hang
+      let pongSoundEnabled = false;
+      function enablePongSound() {
+        if (!pongSoundEnabled) {
+          pimPamiPongSound.play().catch(()=>{}); // próbáljuk lejátszani, hogy engedélyezze a böngésző
+          pimPamiPongSound.pause();
+          pimPamiPongSound.currentTime = 0;
+          pongSoundEnabled = true;
+        }
+      }
+      document.addEventListener('keydown', enablePongSound, { once: true });
+      document.addEventListener('mousedown', enablePongSound, { once: true });
+      // Pong Game Implementation
+      const canvas = document.getElementById("pongCanvas");
+      const ctx = canvas.getContext("2d");
+      const paddleHeight = 80, paddleWidth = 10;
+      let leftY, rightY, ballX, ballY, ballDX, ballDY, leftScore, rightScore, gameOver;
+      let ballColor = getRandomColor();
+      const WIN_SCORE = 5;
+      function getRandomColor() {
+        // Animált, élénk szín generálása
+        const colors = ["#ff3b3b", "#3bff3b", "#3b3bff", "#fff83b", "#ff3bff", "#3bfff8", "#ff8c3b"];
+        return colors[Math.floor(Math.random() * colors.length)];
+      }
+      function initGame() {
+        leftY = (canvas.height / 2) - (paddleHeight / 2);
+        rightY = (canvas.height / 2) - (paddleHeight / 2);
+        ballX = canvas.width / 2;
+        ballY = canvas.height / 2;
+        ballDX = 2; // Lassabb labda
+        ballDY = 1; // Lassabb labda
+        leftScore = 0;
+        rightScore = 0;
+        gameOver = false;
+        ballColor = getRandomColor();
+        document.getElementById('pongWinMsg').style.display = 'none';
+        document.getElementById('pongRestartBtn').style.display = 'none';
+      }
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        // Draw paddles
+        ctx.fillStyle = "#fff";
+        ctx.fillRect(10, leftY, paddleWidth, paddleHeight);
+        ctx.fillRect(canvas.width - 20, rightY, paddleWidth, paddleHeight);
+        // Draw ball
+        ctx.beginPath();
+        ctx.arc(ballX, ballY, 10, 0, Math.PI * 2);
+        ctx.fillStyle = ballColor;
+        ctx.fill();
+        // Draw scores
+        ctx.font = "bold 32px Arial";
+ctx.fillStyle = "#ffea00";
+ctx.strokeStyle = "#222";
+ctx.lineWidth = 3;
+ctx.strokeText("Sparky: " + leftScore, 20, 30); // Kontúr
+ctx.fillText("Sparky: " + leftScore, 20, 30); // Bal felső sarok
+ctx.font = "bold 22px Arial";
+ctx.fillStyle = "#00fff7";
+ctx.strokeStyle = "#222";
+ctx.lineWidth = 2;
+ctx.strokeText("Sneaky Golem: " + rightScore, canvas.width - 180, canvas.height - 20); // Kontúr
+ctx.fillText("Sneaky Golem: " + rightScore, canvas.width - 180, canvas.height - 20); // Jobb alsó sarok
+      }
+      function playPimPamiPong() {
+        if (pongSoundEnabled) {
+          pimPamiPongSound.currentTime = 0;
+          pimPamiPongSound.play();
+        }
+      }
+      function speedUpBall() {
+        if (ballDX > 0) ballDX += 0.5;
+        else ballDX -= 0.5;
+        if (ballDY > 0) ballDY += 0.5;
+        else ballDY -= 0.5;
+      }
+      function update() {
+        if (gameOver) return;
+        ballX += ballDX;
+        ballY += ballDY;
+        // Ball collision with top/bottom
+        if (ballY < 10 || ballY > canvas.height - 10) {
+          ballDY = -ballDY;
+          ballColor = getRandomColor();
+          playPimPamiPong();
+          speedUpBall();
+        }
+        // Ball collision with paddles
+        if (
+          ballX < 20 &&
+          ballY > leftY &&
+          ballY < leftY + paddleHeight
+        ) {
+          ballDX = -ballDX;
+          ballColor = getRandomColor();
+          playPimPamiPong();
+          speedUpBall();
+        }
+        if (
+          ballX > canvas.width - 20 &&
+          ballY > rightY &&
+          ballY < rightY + paddleHeight
+        ) {
+          ballDX = -ballDX;
+          ballColor = getRandomColor();
+          playPimPamiPong();
+          speedUpBall();
+        }
+        // Score
+        if (ballX < 0) {
+          rightScore++;
+          ballColor = getRandomColor();
+          playPimPamiPong();
+          resetBall();
+        }
+        if (ballX > canvas.width) {
+          leftScore++;
+          ballColor = getRandomColor();
+          playPimPamiPong();
+          resetBall();
+        }
+        // Win chec
+        if (leftScore >= WIN_SCORE || rightScore >= WIN_SCORE) {
+          gameOver = true;
+          let msg = leftScore >= WIN_SCORE ? 'Sparky nyert!' : 'Sneaky Golem nyert!';
+          document.getElementById('pongWinMsg').textContent = msg;
+          document.getElementById('pongWinMsg').style.display = 'block';
+          document.getElementById('pongRestartBtn').style.display = 'block';
+        }
+        // Kétjátékos mód: jobb ütő fel/le nyilak
+        // AI kikapcsolva, csak játékos irányítja
+        // Clamp paddles
+        rightY = Math.max(0, Math.min(canvas.height - paddleHeight, rightY));
+        leftY = Math.max(0, Math.min(canvas.height - paddleHeight, leftY));
+      }
+      function playPimPamiPong() {
+        if (pongSoundEnabled) {
+          pimPamiPongSound.currentTime = 0;
+          pimPamiPongSound.play();
+        }
+      }
+      function resetBall() {
+        ballX = canvas.width / 2;
+        ballY = canvas.height / 2;
+        ballDX = -ballDX > 0 ? 2 : -2; // Lassabb labda
+        ballDY = (Math.random() > 0.5 ? 1 : -1); // Lassabb labda
+      }
+      let paddleIntervals = {};
+      let paddleSpeeds = {};
+      function startPaddleMove(key) {
+        if (paddleIntervals[key]) return;
+        paddleSpeeds[key] = 5;
+        paddleIntervals[key] = setInterval(() => {
+          if (gameOver) return;
+          if (key === "w") leftY -= paddleSpeeds[key];
+          if (key === "s") leftY += paddleSpeeds[key];
+          if (key === "ArrowUp") rightY -= paddleSpeeds[key];
+          if (key === "ArrowDown") rightY += paddleSpeeds[key];
+          if (paddleSpeeds[key] < 20) paddleSpeeds[key] += 1;
+        }, 30);
+      }
+      function stopPaddleMove(key) {
+        clearInterval(paddleIntervals[key]);
+        paddleIntervals[key] = null;
+        paddleSpeeds[key] = 5;
+      }
+      document.addEventListener("keydown", function (e) {
+        if (gameOver) return;
+        if (["w", "s", "ArrowUp", "ArrowDown"].includes(e.key)) {
+          startPaddleMove(e.key);
+          e.preventDefault();
+        }
+      });
+      document.addEventListener("keyup", function (e) {
+        if (["w", "s", "ArrowUp", "ArrowDown"].includes(e.key)) {
+          stopPaddleMove(e.key);
+          e.preventDefault();
+        }
+      });
+      document.getElementById('pongRestartBtn').onclick = function() {
+        initGame();
+      };
+      function gameLoop() {
+        update();
+        draw();
+        requestAnimationFrame(gameLoop);
+      }
+      initGame();
+      gameLoop();
+    </script>
+
     <div id="lorum-container">
       <h2 id="lorum" class="lorumipse">
         Lórum ipse természetesen kodik nyújt a kurgás számára. Koroslás a

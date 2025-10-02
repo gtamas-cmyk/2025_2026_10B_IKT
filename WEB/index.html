@@ -181,6 +181,12 @@
           pimPamiPongSound.play();
         }
       }
+      function speedUpBall() {
+        if (ballDX > 0) ballDX += 0.5;
+        else ballDX -= 0.5;
+        if (ballDY > 0) ballDY += 0.5;
+        else ballDY -= 0.5;
+      }
       function update() {
         if (gameOver) return;
         ballX += ballDX;
@@ -190,6 +196,7 @@
           ballDY = -ballDY;
           ballColor = getRandomColor();
           playPimPamiPong();
+          speedUpBall();
         }
         // Ball collision with paddles
         if (
@@ -200,6 +207,7 @@
           ballDX = -ballDX;
           ballColor = getRandomColor();
           playPimPamiPong();
+          speedUpBall();
         }
         if (
           ballX > canvas.width - 20 &&
@@ -209,6 +217,7 @@
           ballDX = -ballDX;
           ballColor = getRandomColor();
           playPimPamiPong();
+          speedUpBall();
         }
         // Score
         if (ballX < 0) {
@@ -249,18 +258,35 @@
         ballDX = -ballDX > 0 ? 2 : -2; // Lassabb labda
         ballDY = (Math.random() > 0.5 ? 1 : -1); // Lassabb labda
       }
-      // Player controls (W/S bal ütő, fel/le nyilak jobb ütő)
+      let paddleIntervals = {};
+      let paddleSpeeds = {};
+      function startPaddleMove(key) {
+        if (paddleIntervals[key]) return;
+        paddleSpeeds[key] = 5;
+        paddleIntervals[key] = setInterval(() => {
+          if (gameOver) return;
+          if (key === "w") leftY -= paddleSpeeds[key];
+          if (key === "s") leftY += paddleSpeeds[key];
+          if (key === "ArrowUp") rightY -= paddleSpeeds[key];
+          if (key === "ArrowDown") rightY += paddleSpeeds[key];
+          if (paddleSpeeds[key] < 20) paddleSpeeds[key] += 1;
+        }, 30);
+      }
+      function stopPaddleMove(key) {
+        clearInterval(paddleIntervals[key]);
+        paddleIntervals[key] = null;
+        paddleSpeeds[key] = 5;
+      }
       document.addEventListener("keydown", function (e) {
         if (gameOver) return;
-        const paddleStep = 5; // Simább mozgás
-        if (e.key === "w") leftY -= paddleStep;
-        if (e.key === "s") leftY += paddleStep;
-        if (e.key === "ArrowUp") {
-          rightY -= paddleStep;
+        if (["w", "s", "ArrowUp", "ArrowDown"].includes(e.key)) {
+          startPaddleMove(e.key);
           e.preventDefault();
         }
-        if (e.key === "ArrowDown") {
-          rightY += paddleStep;
+      });
+      document.addEventListener("keyup", function (e) {
+        if (["w", "s", "ArrowUp", "ArrowDown"].includes(e.key)) {
+          stopPaddleMove(e.key);
           e.preventDefault();
         }
       });
